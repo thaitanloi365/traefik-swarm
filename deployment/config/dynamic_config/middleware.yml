@@ -1,0 +1,56 @@
+http:
+  middlewares:
+    retry:
+      retry:
+        attempts: 4
+    limit:
+      buffering:
+        maxRequestBodyBytes: 2000000
+        memResponseBodyBytes: 2000000
+
+    compress:
+      compress: {}
+
+    ssl-header:
+      headers:
+        customRequestHeaders:
+          X-Forwarded-Proto: https
+
+    https-redirect:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
+    rate-limit:
+      rateLimit:
+        average: 100
+        period: 1s
+        burst: 100
+
+    basic-auth:
+      basicAuth:
+        usersFile: '/usersFile'
+
+    security-headers:
+      headers:
+        # CORS
+        accessControlAllowMethods:
+          - GET
+          - OPTIONS
+          - PUT
+        accessControlAllowOrigin: 'origin-list-or-null'
+        accessControlMaxAge: 100
+        addVaryHeader: true
+
+        browserXssFilter: true
+        contentTypeNosniff: true
+        forceSTSHeader: true
+        frameDeny: true
+        sslRedirect: true
+        stsIncludeSubdomains: true
+        stsPreload: true
+        contentSecurityPolicy: "default-src 'self' 'unsafe-inline'"
+        customFrameOptionsValue: 'SAMEORIGIN'
+        referrerPolicy: 'same-origin'
+        featurePolicy: "vibrate 'self'"
+        stsSeconds: 315360000
