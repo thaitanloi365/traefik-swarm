@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 
 services:
   traefik:
@@ -78,6 +78,12 @@ networks:
   # services that need to be publicly available via this Traefik
   traefik-public:
     external: true
+  app:
+    driver: overlay
+    name: app
+    attachable: true
+    driver_opts:
+      encrypted: "true"
 
 volumes:
   # Create a volume to store the certificates, there is a constraint to make sure
